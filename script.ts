@@ -46,11 +46,7 @@ async function transactional2DoStuff() {
 // A `main` function so that you can use async/await
 async function main() {
   let i = 0;
-  await prisma.$executeRawUnsafe(`CREATE TABLE "user" ("id" serial NOT NULL,  "email" text NOT NULL, "name" text, PRIMARY KEY ("id"), UNIQUE("email"))`);
-
-  // We set a low timeout for the transactions, this should allow prisma to close the session, re-run another one
-  await prisma.$executeRawUnsafe(`SET SESSION idle_in_transaction_session_timeout = '10s'`);
-  await prisma2.$executeRawUnsafe(`SET SESSION idle_in_transaction_session_timeout = '10s'`);
+  await prisma.$executeRawUnsafe(`CREATE TABLE "user" ("id" INTEGER PRIMARY KEY AUTOINCREMENT,  "email" text NOT NULL, "name" text, UNIQUE("email"))`);
 
   while (true) {
     console.log(`iteration number: ${i}`);

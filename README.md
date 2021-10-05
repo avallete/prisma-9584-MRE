@@ -20,4 +20,14 @@ On OSX, you can set thoses limitations via the docker dashboard:
 
 ### Some notes:
 
-The issue doesn't occurs with "sqlite", you can test it by doing the sames commands on `sqlite` branch.
+The issue doesn't occurs with "sqlite", you can test it by doing:
+
+
+```bash
+git clone git@github.com:avallete/prisma-9584-MRE.git
+cd prisma-9584-MRE
+git checkout sqlite
+npm install
+npm run prisma:generate
+docker-compose up
+```
