@@ -51,6 +51,7 @@ async function main() {
   // We set a low timeout for the transactions, this should allow prisma to close the session, re-run another one
   await prisma.$executeRawUnsafe(`SET SESSION idle_in_transaction_session_timeout = '10s'`);
   await prisma2.$executeRawUnsafe(`SET SESSION idle_in_transaction_session_timeout = '10s'`);
+
   while (true) {
     console.log(`iteration number: ${i}`);
     try {
