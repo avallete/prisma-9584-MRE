@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: "pg_isready --username=postgres && psql --username=postgres --list"
+      timeout: 10s
+      retries: 20
+    command: ["postgres", "-c", "log_statement=ddl"]
+    environment:
+      POSTGRES_DB: testing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  
+  app:
+    build:
+      context: "./"
+    command: npm run dev
+    tty: true
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/testing"
+    volumes:
+      - "./:/app:ro"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  
